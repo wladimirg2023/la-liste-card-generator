@@ -3,391 +3,138 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>La Liste Card Generator</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <style>
-
-*{
-    box-sizing:border-box;
-}
-
-body{
-    margin:0;
-    background:#f7f3ec;
-    font-family:Montserrat,sans-serif;
-    color:#7f1016;
-    padding:40px;
-}
-
-h1{
-    margin-top:0;
-    font-family:"Bebas Neue";
-    font-size:48px;
-    letter-spacing:2px;
-}
-
-.wrapper{
-    display:flex;
-    gap:40px;
-    align-items:flex-start;
-    flex-wrap:wrap;
-}
-
-.panel{
-    width:340px;
-    background:white;
-    padding:24px;
-    border-radius:16px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-}
-
-label{
-    display:block;
-    margin-top:16px;
-    margin-bottom:6px;
-    font-size:12px;
-    font-weight:700;
-    text-transform:uppercase;
-    letter-spacing:1px;
-}
-
-input,
-select{
-    width:100%;
-    padding:12px;
-    border-radius:10px;
-    border:1px solid #d6c6b5;
-    font-family:Montserrat;
-    font-size:14px;
-}
-
-button{
-    width:100%;
-    margin-top:16px;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    background:#a21218;
-    color:white;
-    cursor:pointer;
-    font-weight:600;
-}
-
-button:hover{
-    opacity:.95;
-}
+*{box-sizing:border-box}
+body{margin:0;padding:40px;background:#f7f3ec;font-family:Montserrat,sans-serif;color:#7f1016}
+h1{font-family:"Bebas Neue";font-size:48px;letter-spacing:2px}
+.wrapper{display:flex;gap:40px;flex-wrap:wrap}
+.panel{width:340px;background:#fff;padding:24px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+label{display:block;margin-top:16px;margin-bottom:6px;font-size:12px;font-weight:700;text-transform:uppercase}
+input,select{width:100%;padding:12px;border:1px solid #d6c6b5;border-radius:10px}
+button{width:100%;margin-top:14px;padding:14px;border:none;border-radius:10px;background:#a21218;color:#fff;cursor:pointer}
 
 .card{
-
-    width:760px;
-    height:460px;
-
-    position:relative;
-
-    border-radius:28px;
-    overflow:hidden;
-
-    background-image:
-        linear-gradient(
-            rgba(0,0,0,.08),
-            rgba(0,0,0,.08)
-        ),
-        url('./background-texture.jpg');
-
-    background-size:cover;
-    background-position:center;
-
-    box-shadow:
-        0 20px 50px rgba(0,0,0,.30);
+width:760px;height:460px;position:relative;overflow:hidden;border-radius:28px;
+background:
+linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),
+url('./background-texture.jpeg');
+background-size:cover;background-position:center;
+box-shadow:0 25px 60px rgba(0,0,0,.35);
+border:1px solid rgba(212,177,111,.15);
+}
+.card:before{
+content:"";position:absolute;inset:0;
+background:
+radial-gradient(circle at center,rgba(255,175,70,.12),transparent 45%),
+radial-gradient(circle at top left,rgba(255,255,255,.08),transparent 25%);
+}
+.card:after{
+content:"";position:absolute;top:18px;left:18px;right:18px;bottom:18px;
+border:1.5px solid rgba(212,177,111,.7);border-radius:18px;
 }
 
-.card::before{
-    content:"";
-
-    position:absolute;
-    inset:0;
-
-    background:
-        radial-gradient(
-            circle at top left,
-            rgba(255,255,255,.12),
-            transparent 30%
-        );
-
-    pointer-events:none;
-}
-
-.logo{
-    position:absolute;
-    top:45px;
-    left:50%;
-    transform:translateX(-50%);
-    width:310px;
-}
-
-.logo img{
-    width:100%;
-    display:block;
-    filter:
-        drop-shadow(0 2px 3px rgba(0,0,0,.25));
-}
+.logo{position:absolute;top:45px;left:50%;transform:translateX(-50%);width:340px}
+.logo img{width:100%}
 
 .la-liste{
-
-    position:absolute;
-
-    top:175px;
-    left:0;
-    width:100%;
-
-    text-align:center;
-
-    font-family:"Bebas Neue";
-    font-size:34px;
-    letter-spacing:10px;
-
-    color:#d4b16f;
+position:absolute;top:178px;left:0;width:100%;
+text-align:center;font-family:"Bebas Neue";
+font-size:30px;letter-spacing:8px;color:#d4b16f;
 }
 
 .guest-name{
-
-    position:absolute;
-
-    top:245px;
-    left:0;
-    width:100%;
-
-    text-align:center;
-
-    font-family:Montserrat,sans-serif;
-    font-weight:600;
-    font-size:32px;
-
-    color:#d9be80;
-
-    text-shadow:
-        0 1px 0 rgba(255,245,200,.7),
-        0 -1px 0 rgba(60,0,0,.35),
-        0 3px 8px rgba(0,0,0,.35);
+position:absolute;top:250px;left:0;width:100%;
+text-align:center;font-family:Montserrat,sans-serif;
+font-size:36px;font-weight:600;color:#d6b36c;
+text-shadow:0 1px 0 rgba(255,240,190,.85),
+0 -1px 0 rgba(50,0,0,.45),
+0 3px 5px rgba(0,0,0,.35),
+0 0 12px rgba(255,210,140,.12);
 }
 
 .member-since{
-
-    position:absolute;
-    bottom:42px;
-    left:42px;
-
-    color:#d4b16f;
+position:absolute;bottom:42px;left:42px;color:#d4b16f
 }
+.small-label{display:block;font-family:"Bebas Neue";font-size:16px;letter-spacing:3px}
+.small-value{display:block;font-family:"Bebas Neue";font-size:24px;letter-spacing:3px}
 
 .tier{
-
-    position:absolute;
-    bottom:42px;
-    right:42px;
-
-    text-align:right;
-
-    color:#d4b16f;
-}
-
-.small-label{
-    display:block;
-
-    font-family:"Bebas Neue";
-    font-size:16px;
-    letter-spacing:3px;
-
-    opacity:.8;
-}
-
-.small-value{
-    display:block;
-
-    margin-top:2px;
-
-    font-family:"Bebas Neue";
-    font-size:24px;
-    letter-spacing:3px;
-}
-
-.footer{
-    margin-top:30px;
-    color:#666;
-    font-size:13px;
+position:absolute;bottom:42px;right:42px;
+font-family:"Bebas Neue";font-size:26px;letter-spacing:3px;color:#d4b16f;
 }
 
 @media(max-width:1200px){
-
-    .card{
-        width:100%;
-        max-width:760px;
-        aspect-ratio:760 / 460;
-        height:auto;
-    }
-
+.card{width:100%;max-width:760px;height:auto;aspect-ratio:760/460}
 }
-
 </style>
 </head>
-
 <body>
-
 <h1>La Liste Card Generator</h1>
-
 <div class="wrapper">
+<div class="panel">
+<label>Guest Name</label>
+<input id="guestName" value="Wladimir Guez">
 
-    <div class="panel">
+<label>Membership Tier</label>
+<select id="tier">
+<option>La Liste</option>
+<option>La Liste Rouge</option>
+<option>La Liste Signature</option>
+<option>Cercle Sagana</option>
+</select>
 
-        <label>Guest Name</label>
-        <input
-            id="guestName"
-            value="Wladimir Guez">
+<label>Member Since</label>
+<input id="memberSince" value="May 2026">
 
-        <label>Membership Tier</label>
-        <select id="tier">
-            <option>La Liste</option>
-            <option>La Liste Rouge</option>
-            <option>La Liste Signature</option>
-            <option>Cercle Sagana</option>
-        </select>
-
-        <label>Member Since</label>
-        <input
-            id="memberSince"
-            value="May 2026">
-
-        <button onclick="generateCard()">
-            Create La Liste Membership
-        </button>
-
-        <button onclick="downloadCard()">
-            Download PNG
-        </button>
-
-    </div>
-
-    <div id="card" class="card">
-
-        <div class="logo">
-            <img src="./sagana-logo.png" alt="Brasserie Sagana">
-        </div>
-
-        <div class="la-liste">
-            LA LISTE
-        </div>
-
-        <div id="cardName" class="guest-name">
-            Wladimir Guez
-        </div>
-
-        <div class="member-since">
-
-            <span class="small-label">
-                MEMBER SINCE
-            </span>
-
-            <span id="cardSince" class="small-value">
-                MAY 2026
-            </span>
-
-        </div>
-
-        <div class="tier">
-
-            <span class="small-label">
-                TIER
-            </span>
-
-            <span id="cardTier" class="small-value">
-                LA LISTE
-            </span>
-
-        </div>
-
-    </div>
-
+<button onclick="generateCard()">Create La Liste Membership</button>
+<button onclick="downloadCard()">Download PNG</button>
 </div>
 
-<div class="footer">
-Brasserie Sagana · La Liste Membership Generator
+<div id="card" class="card">
+<div class="logo"><img src="./sagana-logo.png"></div>
+<div class="la-liste">LA LISTE</div>
+<div id="cardName" class="guest-name">Wladimir Guez</div>
+
+<div class="member-since">
+<span class="small-label">MEMBER SINCE</span>
+<span id="cardSince" class="small-value">MAY 2026</span>
+</div>
+
+<div id="cardTier" class="tier">La Liste</div>
+</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
-
 <script>
-
 function updateTierColor(){
-
-    const tier =
-        document.getElementById("tier").value;
-
-    const tierElement =
-        document.getElementById("cardTier");
-
-    const colors = {
-
-        "La Liste":"#d4b16f",
-
-        "La Liste Rouge":"#e0c796",
-
-        "La Liste Signature":"#f0ddb5",
-
-        "Cercle Sagana":"#ffd700"
-
-    };
-
-    tierElement.style.color =
-        colors[tier];
+const tier=document.getElementById("tier").value;
+const tierElement=document.getElementById("cardTier");
+const colors={
+"La Liste":"#d4b16f",
+"La Liste Rouge":"#e2c78f",
+"La Liste Signature":"#f1ddb0",
+"Cercle Sagana":"#ffd977"
+};
+tierElement.style.color=colors[tier];
 }
-
 function generateCard(){
-
-    document.getElementById("cardName").innerText =
-        document.getElementById("guestName").value;
-
-    document.getElementById("cardTier").innerText =
-        document.getElementById("tier").value.toUpperCase();
-
-    document.getElementById("cardSince").innerText =
-        document.getElementById("memberSince").value.toUpperCase();
-
-    updateTierColor();
+document.getElementById("cardName").innerText=document.getElementById("guestName").value;
+document.getElementById("cardTier").innerText=document.getElementById("tier").value;
+document.getElementById("cardSince").innerText=document.getElementById("memberSince").value.toUpperCase();
+updateTierColor();
 }
-
 function downloadCard(){
-
-    generateCard();
-
-    html2canvas(
-        document.getElementById("card"),
-        {
-            scale:3,
-            useCORS:true
-        }
-    ).then(function(canvas){
-
-        const link =
-            document.createElement("a");
-
-        link.download =
-            "la-liste-card.png";
-
-        link.href =
-            canvas.toDataURL("image/png");
-
-        link.click();
-
-    });
-
-}
-
 generateCard();
-
+html2canvas(document.getElementById("card"),{scale:3,useCORS:true}).then(canvas=>{
+const link=document.createElement("a");
+link.download="la-liste-card.png";
+link.href=canvas.toDataURL("image/png");
+link.click();
+});
+}
+generateCard();
 </script>
-
 </body>
 </html>
