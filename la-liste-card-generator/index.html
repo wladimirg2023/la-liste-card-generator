@@ -4,10 +4,135 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>La Liste Card Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:40px;background:#f7f3ec;font-family:Montserrat,sans-serif}
+h1{font-family:'Bebas Neue';font-size:48px;color:#7f1016}
+.wrapper{display:flex;gap:40px;flex-wrap:wrap}
+.panel{width:340px;background:#fff;padding:24px;border-radius:16px;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+label{display:block;margin-top:14px;margin-bottom:6px;font-size:12px;font-weight:700;text-transform:uppercase}
+input,select{width:100%;padding:12px;border:1px solid #d6c6b5;border-radius:10px}
+button{width:100%;margin-top:12px;padding:14px;border:none;border-radius:10px;background:#a21218;color:#fff;cursor:pointer}
+
+.card{
+width:760px;height:460px;position:relative;overflow:hidden;border-radius:28px;
+background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.12)),url('./background-texture.png');
+background-size:cover;background-position:center;
+box-shadow:0 25px 60px rgba(0,0,0,.35);
+}
+.card:before{
+content:'';position:absolute;inset:0;
+background:
+radial-gradient(circle at center,rgba(255,175,70,.12),transparent 45%),
+radial-gradient(circle at top left,rgba(255,255,255,.08),transparent 25%);
+}
+.card:after{
+content:'';position:absolute;top:18px;left:18px;right:18px;bottom:18px;
+border:1.5px solid rgba(212,177,111,.7);border-radius:18px;
+}
+.logo{position:absolute;top:65px;left:50%;transform:translateX(-50%);width:300px}
+.logo img{width:100%}
+.guest-name{
+position:absolute;top:220px;left:0;width:100%;text-align:center;
+font-family:Montserrat;font-size:38px;font-weight:600;color:#d6b36c;
+text-shadow:0 1px 0 rgba(255,240,190,.85),0 -1px 0 rgba(50,0,0,.45),0 3px 5px rgba(0,0,0,.35);
+}
+.member-since{position:absolute;left:42px;bottom:42px;color:#d4b16f}
+.small-label,.small-value{display:block;font-family:'Bebas Neue';letter-spacing:3px}
+.small-label{font-size:16px}
+.small-value{font-size:24px}
+.tier{position:absolute;right:42px;bottom:42px;font-family:'Bebas Neue';font-size:26px;color:#d4b16f}
+</style>
 </head>
 <body>
-<h2>La Liste Card Generator - WhatsApp Edition</h2>
-<p>This version includes the WhatsApp field and Send via WhatsApp button.</p>
-<p>Replace with your latest full version if needed; this file demonstrates the WhatsApp integration requested.</p>
+<h1>LA LISTE CARD GENERATOR</h1>
+
+<div class="wrapper">
+<div class="panel">
+<label>Guest Name</label>
+<input id="guestName" value="Wladimir Guez">
+
+<label>Membership Tier</label>
+<select id="tier">
+<option>La Liste</option>
+<option>La Liste Rouge</option>
+<option>La Liste Signature</option>
+<option>Cercle Sagana</option>
+</select>
+
+<label>Member Since</label>
+<input id="memberSince" value="May 2026">
+
+<label>WhatsApp Number</label>
+<input id="phone" placeholder="639171234567">
+
+<button onclick="generateCard()">Issue Membership Card</button>
+<button onclick="downloadCard()">Download PNG</button>
+<button onclick="sendWhatsApp()">Send via WhatsApp</button>
+</div>
+
+<div id="card" class="card">
+<div class="logo"><img src="./sagana-logo.png"></div>
+<div id="cardName" class="guest-name">Wladimir Guez</div>
+
+<div class="member-since">
+<span class="small-label">MEMBER SINCE</span>
+<span id="cardSince" class="small-value">MAY 2026</span>
+</div>
+
+<div id="cardTier" class="tier">La Liste</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script>
+function updateTierColor(){
+const colors={
+"La Liste":"#d4b16f",
+"La Liste Rouge":"#e2c78f",
+"La Liste Signature":"#f1ddb0",
+"Cercle Sagana":"#ffd977"
+};
+cardTier.style.color=colors[tier.value];
+}
+
+function generateCard(){
+cardName.innerText=guestName.value;
+cardTier.innerText=tier.value;
+cardSince.innerText=memberSince.value.toUpperCase();
+updateTierColor();
+}
+
+function downloadCard(){
+generateCard();
+html2canvas(document.getElementById("card"),{scale:3,useCORS:true}).then(canvas=>{
+const a=document.createElement("a");
+a.download="la-liste-card.png";
+a.href=canvas.toDataURL("image/png");
+a.click();
+});
+}
+
+function sendWhatsApp(){
+const phone=document.getElementById("phone").value.trim();
+if(!phone){alert("Please enter a WhatsApp number");return;}
+const message=`Dear ${guestName.value},
+
+Welcome to La Liste, Brasserie Sagana's guest recognition program.
+
+Membership Tier: ${tier.value}
+Member Since: ${memberSince.value}
+
+We are delighted to welcome you as a member and look forward to seeing you again soon.
+
+Brasserie Sagana
+French Art de Vivre in the Heart of BGC`;
+
+window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`,'_blank');
+}
+
+generateCard();
+</script>
 </body>
 </html>
